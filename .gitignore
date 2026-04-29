@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+
+# 量化交易系统运行时数据
+quant_system/data/cache/
+quant_system/data/quant.db
+quant_system/logs/
+quant_system/reports/
+
+# 环境和IDE
+.env
+.venv/
+venv/
+.envrc
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude
+.claude/
