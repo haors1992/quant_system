@@ -65,6 +65,14 @@ SCREEN_CONFIG = {
     "new_stock_days": 60,          # 新股排除天数
 }
 
+# ========== Web Dashboard 配置 ==========
+WEB_CONFIG = {
+    "host": "0.0.0.0",
+    "port": 5000,
+    "debug": False,
+    "refresh_interval": 30,      # 前端自动刷新间隔（秒）
+}
+
 # ========== 股票池（A股） ==========
 STOCK_POOL = [
     # 格式: (代码, 名称)

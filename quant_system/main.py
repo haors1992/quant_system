@@ -9,6 +9,8 @@
     python main.py --backtest   # 回测模式（用历史数据模拟）
     python main.py --report     # 查看最新报告
     python main.py --schedule   # 定时模式（每个交易日收盘后自动运行）
+    python main.py --web        # 启动 Web Dashboard（默认端口5000）
+    python main.py --web 8080   # 启动 Web Dashboard（自定义端口）
 
 设计哲学：
     - 所有决策基于规则，没有犹豫和恐惧
@@ -192,6 +194,12 @@ def run_schedule(db: Database):
     scheduler.run()
 
 
+def run_web(port=None):
+    """启动 Web Dashboard"""
+    from web.app import run_server
+    run_server(port=port)
+
+
 def main():
     print_banner()
     print(f"  当前时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
@@ -217,10 +225,22 @@ def main():
             run_schedule(db)
         except KeyboardInterrupt:
             print("\n\n  定时模式已停止")
+    elif "--web" in args:
+        # 支持 --web 或 --web 8080 指定端口
+        web_port = None
+        web_idx = args.index("--web")
+        if web_idx + 1 < len(args):
+            try:
+                web_port = int(args[web_idx + 1])
+            except ValueError:
+                pass
+        db.close()
+        run_web(port=web_port)
     else:
         result = run_normal(db)
 
-    db.close()
+    if "--web" not in args:
+        db.close()
 
 
 if __name__ == "__main__":
